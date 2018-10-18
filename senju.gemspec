@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["a.suenami@gmail.com"]
 
   spec.summary       = %q{Transparent wrapper of some task management and collabolation tools.}
-  spec.description   = %q{You can get your TODO from some tools.}
+  spec.description   = %q{You can get your todos from some tools.}
   spec.homepage      = "https://github.com/mi2zq/senju"
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
