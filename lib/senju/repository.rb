@@ -43,6 +43,18 @@ class Senju::Repository
     end
   end
 
+  def issues
+    if options["label"] && type == "github"
+      client.issues(name, labels: options["label"]).map do |raw|
+        Senju::Issue.new(raw, type)
+      end
+    else
+      client.issues(name).map do |raw|
+        Senju::Issue.new(raw, type)
+      end
+    end
+  end
+
   def issue(no)
     Senju::Issue.new(client.issue(name, no), type)
   end
@@ -73,12 +85,6 @@ class Senju::Repository
 
     list.map do |raw|
       Senju::Change.new(raw, type)
-    end
-  end
-
-  def issues
-    client.issues(name).map do |raw|
-      Senju::Issue.new(raw, type)
     end
   end
 
