@@ -35,6 +35,8 @@ Gem::Specification.new do |spec|
   spec.add_dependency "gitlab", "~> 4.5.0"
   spec.add_dependency "awesome_print"
   spec.add_dependency "colorize"
+  spec.add_dependency "tty-markdown"
+  spec.add_dependency "rumoji"
   spec.add_development_dependency "bundler", "~> 1.16"
   spec.add_development_dependency "rake", "~> 10.0"
   spec.add_development_dependency "rspec", "~> 3.0"

@@ -42,6 +42,10 @@ class Senju::Repository
     end
   end
 
+  def issue(no)
+    Senju::Issue.new(client.issue(name, no), type)
+  end
+
   def issues
     client.issues(name).map do |raw|
       Senju::Issue.new(raw, type)
