@@ -44,8 +44,8 @@ class Senju::Repository
   end
 
   def issues
-    if options["label"] && type == "github"
-      client.issues(name, labels: options["label"]).map do |raw|
+    if type == "github"
+      client.issues(name, labels: options["label"], assignee: options["assignee"]).map do |raw|
         Senju::Issue.new(raw, type)
       end
     else

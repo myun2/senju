@@ -1,6 +1,6 @@
 # Senju
 
-Listing your issues.
+Issue manager.
 
 ## Installation
 
