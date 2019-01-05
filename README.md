@@ -17,36 +17,16 @@ Making `~/.senju` directory.
 Edit `~/.senju/credentials`.
 
 ```
-<profile name>:
-  <source name>: <token>
+<type>: <access token>
 ```
 
-ex:
-```
-github1:
-  github: aabbccddeeffgg......
-github2:
-  github: ccddeeffgghhii......
-gitlab1:
-  gitlab: 123412341234......
-```
+### Repositories
 
-### Projects
-
-Edit `~/.senju/projects`.
+Edit `~/.senju/repos`.
 
 ```
-<organization>:
-  <repository>:
-    <profile name>:
-```
-
-ex:
-
-```
-myun2:
-  senju:
-    github1:
+<team/repository>:
+  type: <repository type>
 ```
 
 ## Usage

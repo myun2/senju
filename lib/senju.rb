@@ -1,7 +1,6 @@
 require "senju/version"
 require "senju/credentials"
-require "senju/projects"
-require "senju/project"
+require "senju/repository"
 require "senju/github"
 require "senju/gitlab"
 

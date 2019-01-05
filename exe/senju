@@ -3,4 +3,7 @@ require "bundler/setup"
 require "senju"
 require "ap"
 
-ap Senju::Project.first.issues
+repo = ARGV[0]
+command = ARGV[1]
+
+ap Senju::Repository.find(repo).send(command)
