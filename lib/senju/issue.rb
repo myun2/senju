@@ -12,6 +12,14 @@ class Senju::Issue
     end
   end
 
+  def labels
+    case type
+    when "github" then super.map(&:name)
+    else
+      super
+    end
+  end
+
   def title
     case type
     when "trello" then name

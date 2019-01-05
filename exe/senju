@@ -13,7 +13,13 @@ def link_to(text, url)
 end
 
 def print_issue(issue)
-  print link_to("##{issue.no} ".colorize(:blue).bold, issue.url) + issue.title + "\n"
+  print link_to("##{issue.no} ".colorize(:blue).bold, issue.url) + issue.title
+  if issue.labels.length != 0
+    issue.labels.each do |label|
+      print " [#{label}]".colorize(:light_blue)
+    end
+  end
+  print "\n"
 end
 
 def color_patch(patch)
