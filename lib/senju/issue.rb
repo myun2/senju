@@ -8,7 +8,15 @@ class Senju::Issue
   def method_missing(method, *args, &block)
     case type
     when "github" then @raw[method]
-    when "gitlab" then @raw.send(method)
+    when "gitlab", "trello" then @raw.send(method)
+    end
+  end
+
+  def title
+    case type
+    when "trello" then name
+    else
+      super
     end
   end
 
@@ -16,6 +24,7 @@ class Senju::Issue
     case type
     when "github" then @raw["number"]
     when "gitlab" then @raw.iid
+    when "trello" then @raw.short_id
     end
   end
 

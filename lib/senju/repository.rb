@@ -39,6 +39,7 @@ class Senju::Repository
     case type
     when "github" then Senju::Github.new(credential)
     when "gitlab" then Senju::Gitlab.new(credential)
+    when "trello" then Senju::Trello.new(credential)
     end
   end
 
