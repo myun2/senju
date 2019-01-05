@@ -2,8 +2,29 @@
 require "bundler/setup"
 require "senju"
 require "ap"
+require "colorize"
+
+def exec(repo, command)
+  case command
+  when "issues"
+    repo.issues.each do |issue|
+      puts "##{issue.no} ".colorize(:blue).bold + issue.title
+    end
+  when "pr"
+    repo.pull_requests.each do |issue|
+      puts "##{issue.no} ".colorize(:blue).bold + issue.title
+    end
+  end
+end
 
 repo = ARGV[0]
-command = ARGV[1]
+command = ARGV[1] || "issues"
 
-ap Senju::Repository.find(repo).send(command)
+if repo
+  exec(Senju::Repository.find(repo), command)
+else
+  Senju::Repository.all.each do |repo|
+    puts "================= #{repo.name} ====================".colorize(:green).bold
+    exec(repo, command)
+  end
+end

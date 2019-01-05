@@ -29,7 +29,7 @@ class Senju::Repository
   end
 
   def initialize(name, options)
-    @name = name
+    @name = options["repo"] || name
     @options = options
     @type = options["type"]
   end
@@ -43,6 +43,19 @@ class Senju::Repository
   end
 
   def issues
-    client.issues(name)
+    client.issues(name).map do |raw|
+      Senju::Issue.new(raw, type)
+    end
+  end
+
+  def pull_requests
+    case type
+    when "github" then list = client.pull_requests(name)
+    when "gitlab" then list = client.merge_requests(name)
+    end
+
+    list.map do |raw|
+      Senju::Issue.new(raw, type)
+    end
   end
 end
