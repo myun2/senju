@@ -1,6 +1,10 @@
 # Senju
 
-Issue manager.
+Multi issue management serivces integration platform (CLI)
+
+* Github
+* GitLab
+* Trello
 
 ## Installation
 
