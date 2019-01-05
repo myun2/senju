@@ -46,6 +46,13 @@ class Senju::Repository
     Senju::Issue.new(client.issue(name, no), type)
   end
 
+  def pull_request(no)
+    case type
+    when "github" then list = Senju::Issue.new(client.pull_request(name, no), type)
+    when "gitlab" then list = Senju::Issue.new(client.merge_request(name, no), type)
+    end
+  end
+
   def comments(no)
     case type
     when "github" then list = client.issue_comments(name, no)
@@ -54,6 +61,17 @@ class Senju::Repository
 
     list.map do |raw|
       Senju::Comment.new(raw, type)
+    end
+  end
+
+  def changes(no)
+    case type
+    when "github" then list = client.pull_request_files(name, no)
+    when "gitlab" then list = client.merge_request_changes(name, no).changes
+    end
+
+    list.map do |raw|
+      Senju::Change.new(raw, type)
     end
   end
 

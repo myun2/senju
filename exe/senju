@@ -16,6 +16,23 @@ def print_issue(issue)
   print link_to("##{issue.no} ".colorize(:blue).bold, issue.url) + issue.title + "\n"
 end
 
+def color_patch(patch)
+  patch.split("\n").map do |line|
+    case line
+    when /^(---|\+\+\+|\\\\)/
+      "\033[90m#{line.chomp}\033[0m"
+    when /^\+/
+      "\033[32m#{line.chomp}\033[0m"
+    when /^-/
+      "\033[31m#{line.chomp}\033[0m"
+    when /^@@/
+      "\033[36m#{line.chomp}\033[0m"
+    else
+      line.chomp
+    end
+  end.join("\n") + "\n"
+end
+
 def exec(repo, command, option)
   puts "================= #{repo.name} ====================".colorize(:green).bold
 
@@ -32,6 +49,11 @@ def exec(repo, command, option)
         puts "\nComment: #{comment.owner} at #{comment.created_at}".bold
         puts Rumoji.decode(TTY::Markdown.parse(comment.body))
       end
+    elsif option == "diff"
+      repo.changes(command.to_i).each do |change|
+        puts "\n#{change.filename}".bold
+        puts color_patch(change.patch)
+      end
     end
 
     return
@@ -41,6 +63,27 @@ def exec(repo, command, option)
   when "issues"
     repo.issues.each do |issue|
       print_issue(issue)
+    end
+  when "mr"
+    command = option
+    option = ARGV[3]
+    issue = repo.pull_request(command.to_i)
+    print_issue issue
+    puts "Opened by #{issue.owner} at #{issue.created_at}"
+
+    puts "\n" + Rumoji.decode(TTY::Markdown.parse(issue.body))
+
+    if option == "-v" || option == "comments"
+      repo.comments(command.to_i).each do |comment|
+        #color = COLORS[comment.owner[0].ord % 3]
+        puts "\nComment: #{comment.owner} at #{comment.created_at}".bold
+        puts Rumoji.decode(TTY::Markdown.parse(comment.body))
+      end
+    elsif option == "diff"
+      repo.changes(command.to_i).each do |change|
+        puts "\n#{change.filename}".bold
+        puts color_patch(change.patch)
+      end
     end
   when "pr"
     repo.pull_requests.each do |issue|

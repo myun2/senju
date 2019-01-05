@@ -46,7 +46,11 @@ Repository Pull-Requests.
 
 Issue/Pull-Request detail.
 
-    $ senju <repository alias> <issue no>
+    $ senju <repository alias> <issue no> [-v|comments|diff]
+
+Merge Request detail (GitLab)
+
+    $ senju <repository alias> mr <issue no> [-v|comments|diff]
 
 ## Development
 
