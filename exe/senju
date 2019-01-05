@@ -6,6 +6,8 @@ require "colorize"
 require "tty-markdown"
 require "rumoji"
 
+COLORS = %w{green blue light_blue}
+
 def link_to(text, url)
   "\e]8;;#{url}\e\\#{text}\e]8;;\e\\"
 end
@@ -14,7 +16,7 @@ def print_issue(issue)
   print link_to("##{issue.no} ".colorize(:blue).bold, issue.url) + issue.title + "\n"
 end
 
-def exec(repo, command)
+def exec(repo, command, option)
   puts "================= #{repo.name} ====================".colorize(:green).bold
 
   if command.to_i != 0
@@ -23,6 +25,15 @@ def exec(repo, command)
     puts "Opened by #{issue.owner} at #{issue.created_at}"
 
     puts "\n" + Rumoji.decode(TTY::Markdown.parse(issue.body))
+
+    if option == "-v" || option == "comments"
+      repo.comments(command.to_i).each do |comment|
+        #color = COLORS[comment.owner[0].ord % 3]
+        puts "\nComment: #{comment.owner} at #{comment.created_at}".bold
+        puts Rumoji.decode(TTY::Markdown.parse(comment.body))
+      end
+    end
+
     return
   end
 
@@ -40,11 +51,12 @@ end
 
 repo = ARGV[0]
 command = ARGV[1] || "issues"
+option = ARGV[2]
 
 if repo
-  exec(Senju::Repository.find(repo), command)
+  exec(Senju::Repository.find(repo), command, option)
 else
   Senju::Repository.all.each do |repo|
-    exec(repo, command)
+    exec(repo, command, option)
   end
 end

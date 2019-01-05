@@ -25,13 +25,28 @@ Edit `~/.senju/credentials`.
 Edit `~/.senju/repos`.
 
 ```
-<team/repository>:
+<repository alias>:
+  repo: <team/repository name>
   type: <repository type>
 ```
 
 ## Usage
 
+All repository issues.
+
     $ senju
+
+Repository issues.
+
+    $ senju <repository alias> [issues]
+
+Repository Pull-Requests.
+
+    $ senju <repository alias> pr
+
+Issue/Pull-Request detail.
+
+    $ senju <repository alias> <issue no>
 
 ## Development
 

@@ -46,6 +46,17 @@ class Senju::Repository
     Senju::Issue.new(client.issue(name, no), type)
   end
 
+  def comments(no)
+    case type
+    when "github" then list = client.issue_comments(name, no)
+    when "gitlab" then list = client.issue_notes(name, no)
+    end
+
+    list.map do |raw|
+      Senju::Comment.new(raw, type)
+    end
+  end
+
   def issues
     client.issues(name).map do |raw|
       Senju::Issue.new(raw, type)
