@@ -18,4 +18,11 @@ class Senju::Issue
     when "gitlab" then @raw.iid
     end
   end
+
+  def url
+    case type
+    when "github" then @raw["html_url"]
+    when "gitlab" then @raw.web_url
+    end
+  end
 end

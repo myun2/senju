@@ -4,15 +4,23 @@ require "senju"
 require "ap"
 require "colorize"
 
+def link_to(text, url)
+  "\e]8;;#{url}\e\\#{text}\e]8;;\e\\"
+end
+
+def print_issue(issue)
+  print link_to("##{issue.no} ".colorize(:blue).bold, issue.url) + issue.title + "\n"
+end
+
 def exec(repo, command)
   case command
   when "issues"
     repo.issues.each do |issue|
-      puts "##{issue.no} ".colorize(:blue).bold + issue.title
+      print_issue(issue)
     end
   when "pr"
     repo.pull_requests.each do |issue|
-      puts "##{issue.no} ".colorize(:blue).bold + issue.title
+      print_issue(issue)
     end
   end
 end
