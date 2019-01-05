@@ -33,8 +33,8 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency "octokit", "~> 4.9.0"
   spec.add_dependency "gitlab", "~> 4.5.0"
+  spec.add_dependency "awesome_print"
   spec.add_development_dependency "bundler", "~> 1.16"
   spec.add_development_dependency "rake", "~> 10.0"
   spec.add_development_dependency "rspec", "~> 3.0"
-  spec.add_development_dependency "awesome_print"
 end

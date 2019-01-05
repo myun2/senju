@@ -1,28 +1,57 @@
 # Senju
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/senju`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+Listing your issues.
 
 ## Installation
 
-Add this line to your application's Gemfile:
+    $ gem install senju
 
-```ruby
-gem 'senju'
+## Configuration
+
+Making `~/.senju` directory.
+
+    $ mkdir ~/.senju
+
+### Credentials
+
+Edit `~/.senju/credentials`.
+
+```
+<profile name>:
+  <source name>: <token>
 ```
 
-And then execute:
+ex:
+```
+github1:
+  github: aabbccddeeffgg......
+github2:
+  github: ccddeeffgghhii......
+gitlab1:
+  gitlab: 123412341234......
+```
 
-    $ bundle
+### Projects
 
-Or install it yourself as:
+Edit `~/.senju/projects`.
 
-    $ gem install senju
+```
+<organization>:
+  <repository>:
+    <profile name>:
+```
+
+ex:
+
+```
+myun2:
+  senju:
+    github1:
+```
 
 ## Usage
 
-TODO: Write usage instructions here
+    $ senju
 
 ## Development
 
