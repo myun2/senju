@@ -1,21 +1,8 @@
-require 'yaml'
-class Senju::Repos
-  attr_reader :data
-  def initialize(filepath = nil)
-    filepath ||= Dir.home + '/.senju/repos'
-    @data = YAML.load_file(filepath)
-  end
-
-  def [](conf)
-    @data[conf]
-  end
-end
-
 class Senju::Repository
   attr_reader :name, :options, :type
 
   def self.all
-    Senju::Repos.new.data.map do |repository, config|
+    Senju::Projects.data.map do |repository, config|
       new(repository, config)
     end
   end
@@ -25,7 +12,7 @@ class Senju::Repository
   end
 
   def self.find(name)
-    new(name, Senju::Repos.new[name])
+    new(name, Senju::Projects[name])
   end
 
   def initialize(name, options)

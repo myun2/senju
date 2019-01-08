@@ -86,6 +86,8 @@ option = ARGV[2]
 
 if ARGV[0] == "init"
   Senju.init
+elsif ARGV[0] == "add"
+  Senju::Projects.add_interactive(ARGV[1])
 elsif repo
   exec(Senju::Repository.find(repo), command, option)
 else

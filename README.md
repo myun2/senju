@@ -24,15 +24,17 @@ Edit `~/.senju/credentials`.
 <type>: <access token>
 ```
 
-### Repositories
+### Projects
 
-Edit `~/.senju/repos`.
+Edit `~/.senju/projects`.
 
 ```
-<repository alias>:
-  repo: <team/repository name>
+<project name>:
+  repo: <team/repository>
   type: <repository type>
 ```
+
+or interactively `$ senju add <name>`.
 
 ## Usage
 
