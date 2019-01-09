@@ -89,9 +89,17 @@ if ARGV[0] == "init"
   Senju.init
 elsif ARGV[0] == "add"
   Senju::Projects.add_interactive(ARGV[1])
+
 elsif ARGV[0] == "track" or ARGV[0] == "t"
   Senju::Track.add(ARGV[1], ARGV[2])
   print "Track issue successfly.\n".colorize(:green)
+
+elsif ARGV[0] == "start"
+  Senju::Track.status(ARGV[1], ARGV[2], "doing")
+
+elsif ARGV[0] == "done"
+  Senju::Track.erase(ARGV[1], ARGV[2])
+  print "Done issue #{ARGV[1]} #{ARGV[2]}.\n".colorize(:green)
 
 elsif ARGV[0] == "tracks"
   Senju::Track.all.each do |project, issues|
