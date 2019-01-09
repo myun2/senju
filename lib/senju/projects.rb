@@ -18,8 +18,8 @@ class Senju::Projects
     self.load
   end
 
-  def self.[](conf)
-    data[conf]
+  def self.[](name)
+    data[name] || raise("Unknown project \"#{name}\".")
   end
 
   def self.[]=(name, table)

@@ -93,6 +93,14 @@ elsif ARGV[0] == "track" or ARGV[0] == "t"
   Senju::Track.add(ARGV[1], ARGV[2])
   print "Track issue successfly.\n".colorize(:green)
 
+elsif ARGV[0] == "tracks"
+  Senju::Track.all.each do |project, issues|
+    repo = Senju::Repository.find(project)
+    issues.each do |issue, data|
+      exec(repo, issue, "-v")
+    end
+  end
+
 elsif repo
   exec(Senju::Repository.find(repo), command, option)
 else
