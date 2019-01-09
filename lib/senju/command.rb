@@ -1,5 +1,6 @@
 require "senju/print"
 require "senju/track"
+require "senju/tasks"
 
 class Senju::Command
   def self.init
@@ -25,6 +26,10 @@ class Senju::Command
     print "Done issue #{args.first} #{args[1]}.\n".colorize(:green)
   end
 
+  def self.task(title)
+    Senju::Tasks.add(title)
+  end
+
   def self.exec(command, args)
     args ||= []
 
@@ -34,6 +39,12 @@ class Senju::Command
     when "track", "t" then track(args.first, args[1].to_i)
     when "start"      then start(args.first, args[1].to_i)
     when "done"       then done(args.first, args[1].to_i)
+    when "task"       then task(args.join(" "))
+
+    when "tasks"
+      Senju::Tasks.all.each_with_index do |task, i|
+        puts "##{i+1} ".colorize(:blue).bold + task
+      end
 
     when "tracks"
       Senju::Track.all.each do |project, issues|
