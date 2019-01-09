@@ -4,6 +4,7 @@ require "tty-markdown"
 require "rumoji"
 require "senju/diff"
 require "senju/init"
+require "senju/track"
 
 COLORS = %w{green blue light_blue}
 
@@ -88,6 +89,10 @@ if ARGV[0] == "init"
   Senju.init
 elsif ARGV[0] == "add"
   Senju::Projects.add_interactive(ARGV[1])
+elsif ARGV[0] == "track" or ARGV[0] == "t"
+  Senju::Track.add(ARGV[1], ARGV[2])
+  print "Track issue successfly.\n".colorize(:green)
+
 elsif repo
   exec(Senju::Repository.find(repo), command, option)
 else
