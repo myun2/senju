@@ -7,24 +7,33 @@ class Senju::Command
       puts "Create ~/.senju directory".colorize(:green)
   end
 
+  def self.add(name)
+    Senju::Projects.add_interactive(args.first)
+  end
+
+  def self.track(name, issue_no)
+    Senju::Track.add(name, issue_no)
+    print "Track issue successfly.\n".colorize(:green)
+  end
+
+  def self.start(name, issue_no)
+    Senju::Track.status(name, issue_no, "doing")
+  end
+
+  def self.done(name, issue_no)
+    Senju::Track.erase(args.first, args[1])
+    print "Done issue #{args.first} #{args[1]}.\n".colorize(:green)
+  end
+
   def self.exec(command, args)
     args ||= []
 
     case command
-    when "init" then init
-    when "add"
-      Senju::Projects.add_interactive(args.first)
-
-    when "track", "t"
-      Senju::Track.add(args.first, args[1])
-      print "Track issue successfly.\n".colorize(:green)
-
-    when "start"
-      Senju::Track.status(args.first, args[1], "doing")
-
-    when "done"
-      Senju::Track.erase(args.first, args[1])
-      print "Done issue #{args.first} #{args[1]}.\n".colorize(:green)
+    when "init"       then init
+    when "add"        then add(args.first)
+    when "track", "t" then track(args.first, args[1].to_i)
+    when "start"      then start(args.first, args[1].to_i)
+    when "done"       then done(args.first, args[1].to_i)
 
     when "tracks"
       Senju::Track.all.each do |project, issues|
