@@ -25,6 +25,13 @@ type Task struct {
   Labels       []Label
 }
 
+type TaskAssociate struct {
+  gorm.Model
+  AID uint `gorm:"index;not null"`
+  BID uint `gorm:"index;not null"`
+  Relativity string `gorm:"size:255"`
+}
+
 type TaskDeadline struct {
   gorm.Model
   TaskID    uint `gorm:"unique;index;not null"`
@@ -75,6 +82,7 @@ func DbOpen() *gorm.DB {
 func DbMigrate(db *gorm.DB) {
   db.AutoMigrate(
     &Project{}, &Task{}, &Label{}, &TaskLabel{}, &Comment{},
+    &TaskAssociate{},
     &TaskDeadline{}, &TaskAssignee{}, &TaskEstimate{})
 
   // Foreign Keys
@@ -85,6 +93,10 @@ func DbMigrate(db *gorm.DB) {
     "task_id",    "tasks(id)", "RESTRICT", "RESTRICT")
   db.Model(&TaskAssignee{}).AddForeignKey(
     "task_id",    "tasks(id)", "RESTRICT", "RESTRICT")
+  db.Model(&TaskAssociate{}).AddForeignKey(
+    "a_id",       "tasks(id)", "RESTRICT", "RESTRICT")
+  db.Model(&TaskAssociate{}).AddForeignKey(
+    "b_id",       "tasks(id)", "RESTRICT", "RESTRICT")
   db.Model(&TaskEstimate{}).AddForeignKey(
     "task_id",    "tasks(id)", "RESTRICT", "RESTRICT")
   db.Model(&Comment{}).AddForeignKey(
@@ -96,6 +108,7 @@ func DbMigrate(db *gorm.DB) {
     "label_id",   "labels(id)", "RESTRICT", "RESTRICT")
 
   // Multiple-key Unique Indexes
+  db.Model(&TaskAssociate{}).AddUniqueIndex("idx_task_association_unique", "a_id", "b_id", "relativity")
   db.Model(&TaskAssignee{}).AddUniqueIndex("idx_task_id_and_assignee", "task_id", "name")
   db.Model(&TaskLabel{}   ).AddUniqueIndex("idx_task_id_and_label_id", "task_id", "label_id")
 }
