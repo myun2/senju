@@ -2,5 +2,8 @@ package main
 import "fmt"
 
 func main() {
-	fmt.Println("Hello, Senju")
+  db := DbOpen()
+  DbMigrate(db)
+
+  fmt.Println("Hello, Senju")
 }
